@@ -1,25 +1,25 @@
 <?php
 
-namespace phpCache;
+namespace PhpCache;
 
 /**
  * Cache method factory
  * Static
  * @author Paweł
  */
-class Factory {
+class PhpCache {
 
 	/**
 	 * Name of default caching mechanism
 	 * @var string
 	 */
-	public static $sDefaultMechanism = 'Apc';
+	public static $sDefaultMechanism = 'Variable';
 	
 	/**
 	 * Array of registered and available caching mechanisms
 	 * @var array
 	 */
-	private $aRegisteredMechanisms = array('Apc', 'File', 'Memcached', 'Session', 'Variable');
+	private $aRegisteredMechanisms = array('Apc', 'File', 'Memcached', 'Session', 'Variable', 'Redis');
 	
 	/**
 	 * Array of caching method objects
@@ -76,7 +76,7 @@ class Factory {
 			$sClassName = '\phpCache\\' . $sMethod;
 
             /** @noinspection PhpUndefinedMethodInspection */
-            $this->aCacheInstance[$sMethod] = $sClassName::getInstance();
+            $this->aCacheInstance[$sMethod] = new $sClassName();
 			
 		} 
 		
@@ -85,7 +85,7 @@ class Factory {
 
 	/**
 	 * get factory instance
-	 * @return Factory
+	 * @return PhpCache
 	 */
 	static public function getInstance() {
 

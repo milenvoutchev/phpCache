@@ -5,3 +5,6 @@ userData/Cache\\File.sca
 userData/phpCache\\File.sca
 
 .idea/*
+.vagrant
+vendor
+cache

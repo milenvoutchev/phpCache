@@ -1,9 +1,10 @@
-phpCache
+PhpCache
 ========
 
-phpCache is object PHP >=5 cache wrapper that offers similar way of handling various caching mechanisms:
-* APC
+PhpCache is object PHP >=5 cache wrapper that offers similar way of handling various caching mechanisms:
+* APC (deprecated)
 * Memcached
+* Redis
 * Filesystem (deprecated)
 * Session (deprecated)
 * Variable (temporary, not available between requests)
@@ -11,11 +12,11 @@ phpCache is object PHP >=5 cache wrapper that offers similar way of handling var
 #Example usage
 
 ```
-require_once 'Factory.php';
-\phpCache\Factory::$sDefaultMechanism = 'Apc';
-$cache = \phpCache\Factory::getInstance()->create();
+require_once 'PhpCache.php';
+\PhpCache\PhpCache::$sDefaultMechanism = 'Redis';
+$cache = \PhpCache\Factory::getInstance()->create();
 
-$key = new \phpCache\CacheKey('myKey');
+$key = new \PhpCache\CacheKey('myKey');
 $cache->set($key, 'Lorem ipsum');
 if ($cache->check($key)) {
     var_dump($cache->get($key));

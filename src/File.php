@@ -1,6 +1,6 @@
 <?php
 
-namespace phpCache;
+namespace PhpCache;
 
 /**
  * Shared cache over file system. 
@@ -8,7 +8,7 @@ namespace phpCache;
  * @author pawel
  *
  */
-class File{
+class File extends AbstractCache {
 
 	/**
 	 * @var FileElement[]
@@ -38,30 +38,23 @@ class File{
 	/**
 	 * @var boolean
 	 */
-	private $useZip = true;
+	private $useZip = false;
 
-	/**
-	 * @var File
-	 */
-	private static $instance;
-
-	/**
-	 * @return File
-	 */
-	public static function getInstance(){
-		if (empty(self::$instance)) {
-			$className = __CLASS__;
-			self::$instance = new $className;
-		}
-		return self::$instance;
-	}
+    public static $FILE_PATH = '/cache';
 
 	public function __destruct() {
 		$this->synchronize ();
 	}
 
-	private function __construct() {
-		$this->fileName = dirname ( __FILE__ ) . "/userData/" . get_class () . '.sca';
+	public function __construct() {
+
+        $dirName = getcwd() . self::$FILE_PATH;
+
+        if (!file_exists($dirName)) {
+            mkdir($dirName);
+        }
+
+		$this->fileName = $dirName . '/phpcache.sca';
 		$this->load ();
 	}
 
@@ -219,6 +212,7 @@ class File{
 	/**
 	 * Clear whole module and all it's properties
 	 * @param CacheKey $key
+     * @depreciated
 	 */
 	function clearModule(CacheKey $key) {
 
@@ -254,6 +248,7 @@ class File{
 
 	/**
 	 * @param string $className
+     * @depreciated
 	 */
 	public function clearClassCache($className) {
 
